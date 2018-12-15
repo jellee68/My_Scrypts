@@ -1,0 +1,11 @@
+#!/bin/bash
+
+#Replcaces value  of  variable in file
+
+command=$0
+variable=$1
+value=$2
+file=$3
+
+sed -i 's/'$variable'.*/'$variable'='$value'/' "$file"  
+

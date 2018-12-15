@@ -1,0 +1,58 @@
+#!/bin/bash
+
+INPUTFILE=""
+OUTPUTFILE=""
+VERSION="1.0"
+RUN=true 
+
+while [ "$1" != "" ]; 
+do
+	case $1 in
+	-i | --input )
+	INPUTFILE=$2
+	echo $INPUTFILE
+	;;
+		
+	-o | --output )
+	OUTPUTFILE=$2
+
+	;;
+	
+	-v | --version )
+	echo "Version " $VERSION
+	RUN=false
+	;;
+	
+	-a | --all )
+	for i in *.* ;	do
+		MIME=$(file $i --mime-type -b | head -c5  ) 
+		if [ "$MIME" == "video" ]; then
+			INPUTFILE=$i
+			OUTPUTFILE=${INPUTFILE::-4}
+
+
+			mencoder $INPUTFILE -o $OUTPUTFILE.avi -oac mp3lame -ovc xvid -xvidencopts bitrate=3000:pass=2:threads=4 -vf scale=624:-2
+			
+		fi
+	done 
+
+	esac
+	shift
+
+done
+
+echo $INPUTFILE
+
+
+
+
+if [ $RUN = true ] ; then
+ 
+mencoder $INPUTFILE -o $OUTPUTFILE -oac mp3lame -ovc xvid -xvidencopts bitrate=3000:pass=2:threads=4 -vf scale=624:-2
+
+fi
+
+#INPUTFILE=$1
+#OUTPUTFILE=${INPUTFILE::-4}
+#echo $OUTPUTFILE
+
