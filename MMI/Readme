@@ -1,0 +1,8 @@
+This scrypt converts video files to run on Audi MMI.
+It has been tested on 2013 Audi A4.
+
+mmi -i <original video filename> -o <output filename>
+
+mmi -a will convert all videos in working directory and change the extension to .avi
+
+
